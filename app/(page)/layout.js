@@ -11,8 +11,8 @@ export default function layout({ children }) {
 
 <Providers>
 <div className="flex h-screen font-sans">
-  <div className="flex flex-col flex-grow bg-gray-200">
-    <div className="mt-2 ml-10 overflow-y-auto flex-grow">
+  <div className="flex flex-col flex-grow bg-neutral">
+    <div className="m-2 overflow-y-auto flex-grow">
       {children}
     </div>
   </div>

@@ -32,38 +32,24 @@ const PaginatedCollapsibleTable = () => {
     setShowFormError("")
     
     setData(true);
-    const date = new Date(value);
 
-    const formatted = date.toLocaleDateString("th-TH", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-
-    console.log(formatted)
-    /////////////////////// Date +1 //////////////////////////
-    date.setDate(date.getDate() + 1);
-    const formatted2 = date.toLocaleDateString("th-TH", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
+    const parts = value.split("-");
 
     // ดึง API
     axios
       .get(
         process.env.NEXT_PUBLIC_URL_SV +
-          process.env.NEXT_PUBLIC_URL_SearchHN +
-          "1103900068701"
+          process.env.NEXT_PUBLIC_URL_OPDdata + parts[2]+"-"+parts[1]+"-"+parts[0]
+          
       )
       .then((response) => {
         console.log(response.data);
 
         if (response.data.statusCode === 200) {
           // Set ตัวแปรที่ต้องการ
-          setSelectedDate(formatted);
-          setSelectedDate2(formatted2);
-          setDataTestList(response.data.VisitInfo);
+          setSelectedDate(response.data.OPDdata.FromDate);
+           setSelectedDate2(response.data.OPDdata.ToDate);
+           setDataTestList(response.data.OPDdata);
         } else {
           setMassError(response.data.error + " - " + response.data.message);
           setShowFormError("Error");
@@ -84,17 +70,18 @@ const PaginatedCollapsibleTable = () => {
 
   return (
     <>
-      <div className="text-xl flex items-center gap-x-2">
-        กรุณาเลือกวันที่ : 
+      <div className="justify-center border-solid rounded-lg p-4 text-lg">
+        เลือกวันที่ : 
         <input
           type="date"
-          className="input"
+          className="input ml-2 border-2 border-primary w-48"
           onChange={(e) => handleDateChange(e.target.value)}
         />
       </div>
+      <hr className="border-2 border-success"/>
       {showFormError ? (
         <div role="alert" className="alert alert-error mt-2 flex items-center gap-x-2">
-        <BsXCircleFill className="text-lg" />
+        <BsXCircleFill className="text-lg " />
         <span>{massError}</span>
       </div>
       
@@ -102,32 +89,39 @@ const PaginatedCollapsibleTable = () => {
         ""
       )}
       {selectedDate ? (
-        <div className="text-sm mt-2">
-          1. สถิติผู้ป่วยนอก ( {selectedDate} 7:00น. - {selectedDate2} 7:00น. )
-          <div>จำนวน............ราย Admit.......ราย</div>
+        <div className="text-sm mt-2 m-2 border-2 border-base-100 bg-accent rounded-lg">
+          <div className="m-2 text-warning ">
+          <div className="font-bold">1. สถิติผู้ป่วยนอก  {selectedDate} 7:00 - {selectedDate2} 7:00 </div>
+    <div className="flex items-center gap-x-2 mt-2 ">
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-error text-base">VN : {dataTestList.VN}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-error text-base">HN : {dataTestList.HN}</h2> </div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-error text-base">Admit : {dataTestList.Admit}</h2></div> 
+        </div>
+          </div>
         </div>
       ) : data ? showFormError ? "" : (
-        <div className="">
-          <span className="loading loading-spinner loading-md"></span>
-        </div>
+        <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-600 bg-opacity-50">
+        <span className="loading loading-spinner text-error w-20 h-20"></span>
+        <div className="text-4xl text-base-100 text-center mt-6">Loading...</div>
+      </div>
       ) : (
         ""
       )}
 
-     {/*  วิธีการดึงตัวแปร คือ  ( {ตัวแปร ? "มีค่า" : "ไม่มีค่า" } ) */}
+     {/*  วิธีการดึงตัวแปร คือ  ( {ตัวแปร ? "มีค่า" : "ไม่มีค่า" } ) หรือ {ตัวแปร} */}
 
 
-      {/*  ดึงตัวแปรมาแค่ตัวเดียว [0] คือ array ตัวที่ 0 */}
-      {dataTestList ? (<div className="text-red-500">{dataTestList[0].HN}</div>) : ""}
+      {/*  ดึงตัวแปรมาแค่ตัวเดียว */}
+      {/* {dataTestList ? (<div className="text-red-500">{dataTestList.HN}</div>) : ""} */}
 
       {/*  ดึงตัวแปรมาโชว์วนลูบทั้งหมด */}
-      {dataTestList
+      {/* {dataTestList
         ? dataTestList.map((test, index) => (
             <div key={index} value={test.index}>
               {test.HN}
             </div>
           ))
-        : ""}
+        : ""} */}
 
 
 
