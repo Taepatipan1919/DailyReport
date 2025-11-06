@@ -39,7 +39,7 @@ const PaginatedCollapsibleTable = () => {
     axios
       .get(
         process.env.NEXT_PUBLIC_URL_SV +
-          process.env.NEXT_PUBLIC_URL_OPDdata + parts[2]+"-"+parts[1]+"-"+parts[0]
+          process.env.NEXT_PUBLIC_URL_allOPDdata + parts[2]+"-"+parts[1]+"-"+parts[0]
           
       )
       .then((response) => {
@@ -88,18 +88,69 @@ const PaginatedCollapsibleTable = () => {
       ) : (
         ""
       )}
-      {selectedDate ? (
-        <div className="text-sm mt-2 m-2 border-2 border-base-100 bg-accent rounded-lg">
-          <div className="m-2 text-warning ">
-          <div className="font-bold">1. สถิติผู้ป่วยนอก  {selectedDate} 7:00 - {selectedDate2} 7:00 </div>
-    <div className="flex items-center gap-x-2 mt-2 ">
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-error text-base">VN : {dataTestList.VN}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-error text-base">HN : {dataTestList.HN}</h2> </div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-error text-base">Admit : {dataTestList.Admit}</h2></div> 
+      {selectedDate ? (<>
+<div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
+<div className="m-2 text-warning ">
+<div className="font-bold">1. สถิติผู้ป่วยนอก (07:00-07:00)</div>
+     <div className="flex items-center gap-x-2 mt-2 ">
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit}</h2></div> 
         </div>
-          </div>
         </div>
-      ) : data ? showFormError ? "" : (
+        </div>
+
+<div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
+<div className="m-2 text-warning ">
+<div className="font-bold">2. สถิติผู้ป่วยคลินิกทั่วไป (17:01-20:00)</div>
+      <div className="flex items-center gap-x-2 mt-2 ">
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN2}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN2}</h2> </div> 
+        </div>
+        </div>
+        </div>
+
+<div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
+<div className="m-2 text-warning ">
+<div className="font-bold">3. สถิติผู้ป่วยประกันสังคม (17:01-20:00)</div>
+      <div className="flex items-center gap-x-2 mt-2 ">
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN3}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN3}</h2> </div> 
+        </div>
+        </div>
+        </div>
+
+<div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
+<div className="m-2 text-warning ">
+<div className="font-bold">4. ER Case นอกเวลา</div>
+<div className="flex items-center gap-x-2 mt-2 ">
+<div className="font-bold"> 17:00-07:00 </div>
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
+        </div>
+        
+<div className="flex items-center gap-x-2 mt-2 ">
+<div className="font-bold"> 17:00-20:00 </div>
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
+        </div>
+
+<div className="flex items-center gap-x-2 mt-2 ">
+<div className="font-bold"> 20:00-24:00 </div>
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
+        </div>
+
+<div className="flex items-center gap-x-2 mt-2 ">
+<div className="font-bold"> 24:00-07:00 </div>
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
+        </div>
+
+        </div>
+        </div>
+
+      </>) : data ? showFormError ? "" : (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-600 bg-opacity-50">
         <span className="loading loading-spinner text-error w-20 h-20"></span>
         <div className="text-4xl text-base-100 text-center mt-6">Loading...</div>

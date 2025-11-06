@@ -12,16 +12,16 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          primary: "#0000FF", // 
-          secondary: "#1500FF", // กรอบ
-          info: "#76D7EA", // ฟ้าสดใส
-          accent: "#64A7FA", // 
-          neutral: "#F3F9FC", // ฟ้าขาว
-          "base-100": "#FFFFFF", // 
-          "base-300": "#CFD4D4", // 
-          success: "#9E9E9E", // เทา
-          warning: "#FCDE70", // เหลืองพาสเทล
-          error: "#fe5858", // แดงพาสเทล
+          primary: "#0000FF",
+          secondary: "#8b9dc3",
+          info: "#f7f7f7",
+          accent: "#64A7FA",
+          neutral: "#F3F9FC",
+          "base-100": "#FFFFFF", 
+          "base-300": "#CFD4D4",
+          success: "#9E9E9E",
+          warning: "#005b96",
+          error: "#fe5858",
         },
       },
     ],
