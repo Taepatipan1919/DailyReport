@@ -125,26 +125,26 @@ const PaginatedCollapsibleTable = () => {
 <div className="font-bold">4. ER Case นอกเวลา</div>
 <div className="flex items-center gap-x-2 mt-2 ">
 <div className="font-bold"> 17:00-07:00 </div>
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN4a}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit4a}</h2> </div> 
         </div>
         
 <div className="flex items-center gap-x-2 mt-2 ">
 <div className="font-bold"> 17:00-20:00 </div>
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN4b}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit4b}</h2> </div> 
         </div>
 
 <div className="flex items-center gap-x-2 mt-2 ">
 <div className="font-bold"> 20:00-24:00 </div>
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN4c}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit4c}</h2> </div> 
         </div>
 
 <div className="flex items-center gap-x-2 mt-2 ">
 <div className="font-bold"> 24:00-07:00 </div>
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN4d}</h2></div> 
+      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit4d}</h2> </div> 
         </div>
 
         </div>
