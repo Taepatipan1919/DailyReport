@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: "ไม่รายชื่อ",
+  value: "ไม่มีรายชื่อ",
   Data: {},
 };
 

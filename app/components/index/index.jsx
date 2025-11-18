@@ -1,183 +1,165 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import useEffectOnce from "/hooks/use-effect-once";
 import axios from "axios";
-
-
+import { useSelector } from "react-redux";
 // ICON
 import { BsXCircleFill } from "react-icons/bs";
 
-const PaginatedCollapsibleTable = () => {
-  // ประกาศ ตัวแปร ให้ = ค่าว่าง
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedDate2, setSelectedDate2] = useState("");
-  const [showFormError, setShowFormError] = useState("");
-  const [massError, setMassError] = useState("");
-  const [dataTestList, setDataTestList] = useState("");
-  const [data, setData] = useState("");
+export default function Page() {
 
+  //  const ReDux = useSelector((state) => ({ ...state }));
+   const ReDux = useSelector((state) => state.DataTran.Data);
+   const Status = useSelector((state) => state.DataTran.value);
 
+  const [dataValue, setDataValue] = useState(null);
 
-  // ทำฟังชั่นเมื่อเข้าหน้านี้มา
-  useEffectOnce(() => {
-    setData(null);
-
-  });
-
-  const handleDateChange = (value) => {
-    setSelectedDate("");
-    setSelectedDate2("");
-    setDataTestList("");
-    setMassError("")
-    setShowFormError("")
-    
-    setData(true);
-
-    const parts = value.split("-");
-
-    // ดึง API
-    axios
-      .get(
-        process.env.NEXT_PUBLIC_URL_SV +
-          process.env.NEXT_PUBLIC_URL_allOPDdata + parts[2]+"-"+parts[1]+"-"+parts[0]
-          
-      )
-      .then((response) => {
-        console.log(response.data);
-
-        if (response.data.statusCode === 200) {
-          // Set ตัวแปรที่ต้องการ
-          setSelectedDate(response.data.OPDdata.FromDate);
-           setSelectedDate2(response.data.OPDdata.ToDate);
-           setDataTestList(response.data.OPDdata);
-        } else {
-          setMassError(response.data.error + " - " + response.data.message);
-          setShowFormError("Error");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-
-        try {
-          setMassError(error.config.url);
-          setShowFormError("Error");
-        } catch (error) {
-          setMassError(error.response.data.HTTPStatus.message);
-          setShowFormError("Error");
-        }
-      });
-  };
+useEffect(() => {
+  setDataValue(ReDux);
+   }, [ReDux]); 
 
   return (
     <>
-      <div className="justify-center border-solid rounded-lg p-4 text-lg">
-        เลือกวันที่ : 
-        <input
-          type="date"
-          className="input ml-2 border-2 border-primary w-48"
-          onChange={(e) => handleDateChange(e.target.value)}
-        />
-      </div>
-      <hr className="border-2 border-success"/>
-      {showFormError ? (
-        <div role="alert" className="alert alert-error mt-2 flex items-center gap-x-2">
-        <BsXCircleFill className="text-lg " />
-        <span>{massError}</span>
-      </div>
-      
-      ) : (
-        ""
-      )}
-      {selectedDate ? (<>
-<div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
-<div className="m-2 text-warning ">
-<div className="font-bold">1. สถิติผู้ป่วยนอก (07:00-07:00)</div>
-     <div className="flex items-center gap-x-2 mt-2 ">
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN}</h2> </div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit}</h2></div> 
-        </div>
-        </div>
-        </div>
 
-<div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
-<div className="m-2 text-warning ">
-<div className="font-bold">2. สถิติผู้ป่วยคลินิกทั่วไป (17:01-20:00)</div>
-      <div className="flex items-center gap-x-2 mt-2 ">
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN2}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN2}</h2> </div> 
-        </div>
-        </div>
-        </div>
-
-<div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
-<div className="m-2 text-warning ">
-<div className="font-bold">3. สถิติผู้ป่วยประกันสังคม (17:01-20:00)</div>
-      <div className="flex items-center gap-x-2 mt-2 ">
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN3}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">HN : {dataTestList.HN3}</h2> </div> 
-        </div>
-        </div>
-        </div>
-
-<div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
-<div className="m-2 text-warning ">
-<div className="font-bold">4. ER Case นอกเวลา</div>
-<div className="flex items-center gap-x-2 mt-2 ">
-<div className="font-bold"> 17:00-07:00 </div>
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN4a}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit4a}</h2> </div> 
-        </div>
-        
-<div className="flex items-center gap-x-2 mt-2 ">
-<div className="font-bold"> 17:00-20:00 </div>
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN4b}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit4b}</h2> </div> 
-        </div>
-
-<div className="flex items-center gap-x-2 mt-2 ">
-<div className="font-bold"> 20:00-24:00 </div>
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN4c}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit4c}</h2> </div> 
-        </div>
-
-<div className="flex items-center gap-x-2 mt-2 ">
-<div className="font-bold"> 24:00-07:00 </div>
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">VN : {dataTestList.VN4d}</h2></div> 
-      <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100"><h2 className="text-warning text-base">Admit : {dataTestList.Admit4d}</h2> </div> 
-        </div>
-
-        </div>
-        </div>
-
-      </>) : data ? showFormError ? "" : (
+      {Status === "กำลังโหลด" ?  <>
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-600 bg-opacity-50">
-        <span className="loading loading-spinner text-error w-20 h-20"></span>
-        <div className="text-4xl text-base-100 text-center mt-6">Loading...</div>
-      </div>
-      ) : (
-        ""
-      )}
-
-     {/*  วิธีการดึงตัวแปร คือ  ( {ตัวแปร ? "มีค่า" : "ไม่มีค่า" } ) หรือ {ตัวแปร} */}
-
-
-      {/*  ดึงตัวแปรมาแค่ตัวเดียว */}
-      {/* {dataTestList ? (<div className="text-red-500">{dataTestList.HN}</div>) : ""} */}
-
-      {/*  ดึงตัวแปรมาโชว์วนลูบทั้งหมด */}
-      {/* {dataTestList
-        ? dataTestList.map((test, index) => (
-            <div key={index} value={test.index}>
-              {test.HN}
+            <span className="loading loading-spinner text-error w-20 h-20"></span>
+            <div className="text-4xl text-base-100 text-center mt-6">
+              Loading...
             </div>
-          ))
-        : ""} */}
+          </div>
+      </>  : ""}
+  {((dataValue === "")||(dataValue === null)) ? <></> :
+  <>
+          <div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
+            <div className="m-2 text-warning ">
+              <div className="font-bold">1. สถิติผู้ป่วยนอก (07:00-07:00)</div>
+              <div className="flex items-center gap-x-2 mt-2 ">
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    VN :     {dataValue ? <>{dataValue.VN}</> : 'Loading...'}
+                  </h2>
+                </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    HN : {dataValue ? <>{dataValue.HN}</> : 'Loading...'}
+                  </h2>
+                </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    Admit : {dataValue ? <>{dataValue.Admit}</> : 'Loading...'}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
+            <div className="m-2 text-warning ">
+              <div className="font-bold">
+                2. สถิติผู้ป่วยคลินิกทั่วไป (17:01-20:00)
+              </div>
+              <div className="flex items-center gap-x-2 mt-2 ">
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    VN : {dataValue ? <>{dataValue.VN2}</> : 'Loading...'}
+                  </h2>
+                </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    HN : {dataValue ? <>{dataValue.HN2}</> : 'Loading...'}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
+            <div className="m-2 text-warning ">
+              <div className="font-bold">
+                3. สถิติผู้ป่วยประกันสังคม (17:01-20:00)
+              </div>
+              <div className="flex items-center gap-x-2 mt-2 ">
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    VN : {dataValue ? <>{dataValue.VN3}</> : 'Loading...'}
+                  </h2>
+                </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    HN : {dataValue ? <>{dataValue.HN3}</> : 'Loading...'}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-sm mt-2 m-2 border-2 border-base-100 bg-info rounded-lg">
+            <div className="m-2 text-warning ">
+              <div className="font-bold">4. ER Case นอกเวลา</div>
+              <div className="flex items-center gap-x-2 mt-2 ">
+                <div className="font-bold"> 17:00-07:00 </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    VN : {dataValue ? <>{dataValue.VN4a}</> : 'Loading...'}
+                  </h2>
+                </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    Admit : {dataValue ? <>{dataValue.Admit4a}</> : 'Loading...'}
+                  </h2>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-x-2 mt-2 ">
+                <div className="font-bold"> 17:00-20:00 </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    VN : {dataValue ? <>{dataValue.VN4b}</> : 'Loading...'}
+                  </h2>
+                </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    Admit : {dataValue ? <>{dataValue.Admit4b}</> : 'Loading...'}
+                  </h2>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-x-2 mt-2 ">
+                <div className="font-bold"> 20:00-24:00 </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    VN : {dataValue ? <>{dataValue.VN4c}</> : 'Loading...'}
+                  </h2>
+                </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    Admit : {dataValue ? <>{dataValue.Admit4c}</> : 'Loading...'}
+                  </h2>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-x-2 mt-2 ">
+                <div className="font-bold"> 24:00-07:00 </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    VN : {dataValue ? <>{dataValue.VN4d}</> : 'Loading...'}
+                  </h2>
+                </div>
+                <div className="rounded-lg border-secondary border-2 border-secondary flex items-center gap-x-2 px-3 bg-base-100">
+                  <h2 className="text-warning text-base">
+                    Admit : {dataValue ? <>{dataValue.Admit4d}</> : 'Loading...'}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+}
 
 
 
     </>
   );
 };
-
-export default PaginatedCollapsibleTable;

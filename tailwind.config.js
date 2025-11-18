@@ -20,7 +20,7 @@ module.exports = {
           "base-100": "#FFFFFF", 
           "base-300": "#CFD4D4",
           success: "#9E9E9E",
-          warning: "#005b96",
+          warning: "#007ACC",
           error: "#fe5858",
         },
       },
