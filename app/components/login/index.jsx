@@ -41,7 +41,7 @@ export default function Page() {
     event.preventDefault();
 
    if (
-    (credentials.username === "admin") || (credentials.password === "admin")
+    ((credentials.username === "admin")||(credentials.username === "Admin")) || (credentials.password === "admin")
   
   ){
     dispatch(
