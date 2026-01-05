@@ -14,6 +14,10 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { save2 } from "../store/patientSlice";
+import axios from "axios";
+
+
+
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -39,17 +43,33 @@ export default function Page() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(credentials)
+   if (credentials.username && credentials.password){
 
-   if (
-    ((credentials.username === "admin")||(credentials.username === "Admin")) || (credentials.password === "admin")
-  
-  ){
-    dispatch(
-      save2({
-        value: "มีรายชื่อ",
-        Data: credentials,
-      })
-    );
+    
+    axios
+    .get(
+      process.env.NEXT_PUBLIC_URL_SV184+process.env.NEXT_PUBLIC_URL_Login + "userid=" + credentials.username +"&password="+ credentials.password
+    )
+    .then((res) => {
+         console.log(res.data)
+    if (res.data.LogOnInfo.LogOnCode  === 2){
+
+      dispatch(
+        save2({
+          value: "มีรายชื่อ",
+          Data: res.data.LogOnInfo.LogOnUserName,
+        })
+      );
+    }else{
+      document.getElementById("my_modal_2").showModal();
+    }
+
+})
+.catch((error) => {
+  document.getElementById("Error").showModal();
+});
+
   }else{
     document.getElementById("my_modal_2").showModal();
   }
@@ -80,7 +100,7 @@ export default function Page() {
       </svg>
     </div>
     <p className="py-2 text-lg text-gray-700">
-      Username หรือ Password ผิดพลาด
+        ชื่อผู้ใช้งาน หรือ รหัสผ่าน ผิดพลาด
     </p>
 
   </div>
@@ -89,6 +109,33 @@ export default function Page() {
   </form>
 </dialog>
 
+
+<dialog id="Error" className="modal">
+  <div className="modal-box flex flex-col items-center justify-center p-8"> 
+    <div className="mb-4">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-16 w-16 stroke-current text-error"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    </div>
+    <p className="py-2 text-lg text-gray-700">
+        Error Network!!
+    </p>
+
+  </div>
+  <form method="dialog" className="modal-backdrop">
+    <button>ปิด</button>
+  </form>
+</dialog>
 
 
 
